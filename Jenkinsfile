@@ -34,19 +34,19 @@ pipeline {
     }
 
     stage('Deploy Production') {
-      post {
-        always {
-          archiveArtifacts(artifacts: 'target/demoapp.jar', fingerprint: true)
-        }
-
-        failure {
-          mail(to: 'aliciabielsa@gmail.com', subject: "Failed Pipeline ${currentBuild.fullDisplayName}", body: " For details about the failure, see ${env.BUILD_URL}")
-        }
-
-      }
       steps {
         echo 'Deploy to production'
       }
+    }
+
+  }
+  post {
+    always {
+      archiveArtifacts(artifacts: 'target/demoapp.jar', fingerprint: true)
+    }
+
+    failure {
+      mail(to: 'aliciabielsa@gmail.com', subject: "Failed Pipeline ${currentBuild.fullDisplayName}", body: " For details about the failure, see ${env.BUILD_URL}")
     }
 
   }
